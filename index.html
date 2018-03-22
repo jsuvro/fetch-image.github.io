@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fetch Image</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <style>
+        body {
+            margin:0;
+            padding:0;
+        }
+        .body {
+            height: 100vh;
+            position: relative;
+            background: url("https://picsum.photos/2000/1200/?random");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            
+        }
+        .btn {
+            display: block;
+            width: 350px;
+            height: 50px;
+            font-size: 20px;
+            font-family: 'Roboto', sans-serif;
+            border: 0;
+            margin: 0 auto;
+            letter-spacing: 1.5px;
+            text-align: center;
+            border-radius: 2%;
+        }
+        
+        .btn:hover {
+            color: rgba(250,250,250 ,1);
+            background: rgba(33,33,33 ,.8);
+            opacity: .6;
+            border:0;
+            
+        }
+        .button {
+            text-align: center;
+            margin: auto auto
+        }
+        
+        .failed {
+            display: none;
+            text-align: center;
+            font-size: 30px;
+            font-family: 'Roboto', sans-serif;
+            background: rgba(250,250,250 ,1);
+            color: rgba(33,33,33 ,.8);
+
+        }
+    </style>
+</head>
+<body>
+    <div id="body" class="body">
+        <div class="button">
+                <button id="btn" class="btn">
+                        Change Background 
+                    </button>
+        </div>
+        <div class="failed" id="failed">
+            <p>Failed to fetch!!!</p>
+        </div>
+        
+    </div>
+    
+    <script>
+        var button = document.getElementById("btn");
+        var bodyDiv = document.getElementById("body");
+        var failed = document.getElementById("failed");
+
+        button.addEventListener("click", function () {
+            var url = "https://picsum.photos/1200/800/?random";
+
+            fetch(url)
+            .then(function (res) {
+                if (!res.ok) {
+                    throw Error();
+                }
+                return res;
+            })
+            .then(function (res) {
+                bodyDiv.style.background = `url("${res.url}")`;
+            })
+            .catch(function (err) {
+                if (err) {
+                    button.textContent = "Retry";
+                    button.style.fontSize = "29px";
+                    button.style.fontFamily = "'Roboto', sans-serif";
+                    button.style.letterSpacing = "1.8px";
+                    button.style.color = "rgba(100,221,23 ,1)";
+                    failed.style.display = "block";
+                    console.log(err)
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
